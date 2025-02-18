@@ -68,7 +68,7 @@ These instructions will help you set up and use Neospeller in your Neovim enviro
 
 Neospeller will rewrite the buffer with the corrected text in the comments.
 
-Availables languages:
+Available languages:
 - Rust
 - Python
 - Javascript
