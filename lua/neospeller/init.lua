@@ -68,7 +68,7 @@ end
 
 M.setup = function()
    vim.api.nvim_create_autocmd('FileType', {
-      pattern = { "rust", "python", "javascript", "css" },
+      pattern = { "rust", "python", "javascript", "css", "lua", "c" },
       callback = function()
          vim.api.nvim_create_user_command('CheckSpell', function(range)
             check_spell(range)
