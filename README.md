@@ -71,6 +71,8 @@ Neospeller will rewrite the buffer with the corrected text in the comments.
 Available languages:
 - Rust
 - Python
-- Javascript
+- JavaScript
 - CSS
+- Lua
+- C
 

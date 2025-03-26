@@ -6,10 +6,9 @@ local status = {
    offset = 0,
    buffer = nil
 }
----Gets text from selection or buffer
----@param range? table
----@param buffer? number
----@return nil
+--- Gets text from the selection or buffer
+--- @param range? table
+--- @param buffer? number
 local function get_text(range, buffer)
    if buffer and vim.api.nvim_buf_is_valid(buffer) then
       status.buffer = buffer
@@ -17,7 +16,7 @@ local function get_text(range, buffer)
       status.buffer = vim.api.nvim_get_current_buf()
    end
 
-   -- Verify if there is a selecion, if there is, use it, else use the whole buffer
+   -- Verify if there is a selection; if so, use it; otherwise, use the whole buffer
    if range and range.count > 1 then
       status.full_text = vim.api.nvim_buf_get_lines(status.buffer, range.line1 - 1, range.line2, false)
       status.text = table.concat(status.full_text, "\n")
@@ -28,8 +27,8 @@ local function get_text(range, buffer)
    end
 end
 
----Checks values of global status
----@return boolean
+--- Checks the values of the global status
+--- @return boolean
 local function check_status()
    for _, value in ipairs(status) do
       if not value then
@@ -39,6 +38,8 @@ local function check_status()
    return true
 end
 
+---Handle the user command
+---@param range table
 local function check_spell(range)
    get_text(range)
 
