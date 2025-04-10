@@ -40,7 +40,8 @@ end
 
 ---Handle the user command
 ---@param range table
-local function check_spell(range)
+---@param lang? string
+local function check_spell(range, lang)
    get_text(range)
 
    if not check_status() then
@@ -52,9 +53,11 @@ local function check_spell(range)
       return
    end
 
-   local language = vim.api.nvim_get_option_value('filetype', { buf = status.buffer })
+   if not lang then
+      lang = vim.api.nvim_get_option_value('filetype', { buf = status.buffer })
+   end
 
-   local command = { "neospeller", "--lang", language }
+   local command = { "neospeller", "--lang", lang }
 
    local job = vim.fn.jobstart(command, {
       stdout_buffered = true,
@@ -68,15 +71,16 @@ local function check_spell(range)
 end
 
 M.setup = function()
-   vim.api.nvim_create_autocmd('FileType', {
-      pattern = { "rust", "python", "javascript", "css", "lua", "c" },
-      callback = function()
-         vim.api.nvim_create_user_command('CheckSpell', function(range)
-            check_spell(range)
-         end, {
-            range = 1,
-         })
-      end
+   vim.api.nvim_create_user_command('CheckSpell', function(range)
+      check_spell(range)
+   end, {
+      range = 1,
+   })
+
+   vim.api.nvim_create_user_command('CheckSpellText', function(range)
+      check_spell(range, "text")
+   end, {
+      range = 1,
    })
 end
 

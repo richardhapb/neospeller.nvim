@@ -19,14 +19,19 @@ These instructions will help you set up and use Neospeller in your Neovim enviro
 
 2. Install the Neospeller plugin using your preferred plugin manager:
 
-    Lazyvim:
-
+    LazyVim:
 
     ```lua
-    {
-      "richardhapb/neospeller.nvim",
-      opts = {}
-    }
+   {
+     dir = "~/plugins/neospeller.nvim",
+     lazy = false,
+     opts = {},
+     cmd = "CheckSpell",
+     keys = {
+       { "<leader>S", ":CheckSpell<CR>", mode = { "x", "n" },  desc = "Check spelling" },
+       { "<leader>D", ":CheckSpellText<CR>", mode = { "x", "n" },  desc = "Check spelling" }
+     }
+   }
     ```
 
    Packer:
@@ -34,14 +39,25 @@ These instructions will help you set up and use Neospeller in your Neovim enviro
     ```lua
     use {
       "richardhapb/neospeller.nvim",
-      opt = true
+      opt = true,
+      config = function() require('neospeller').setup() end,
+      cmd = "CheckSpell",
+      keys = {
+        { "<leader>S", ":CheckSpell<CR>", mode = { "x", "n" },  desc = "Check spelling" },
+        { "<leader>D", ":CheckSpellText<CR>", mode = { "x", "n" },  desc = "Check spelling" }
+      }
     }
     ```
 
-   Plugged:
+   Plug:
 
     ```vim
-    Plug 'richardhapb/neospeller.nvim'
+   Plug 'richardhapb/neospeller.nvim', {'on': ['CheckSpell', 'CheckSpellText']}
+   " Use with keymaps:
+   " nnoremap <leader>S :CheckSpell<CR>
+   " vnoremap <leader>S :CheckSpell<CR>
+   " nnoremap <leader>D :CheckSpellText<CR>
+   " vnoremap <leader>D :CheckSpellText<CR>
     ```
 
 ### Usage
@@ -66,6 +82,12 @@ These instructions will help you set up and use Neospeller in your Neovim enviro
         :'<,'>CheckSpell
         ```
 
+    - To check plain text (not considering the language)
+
+        ```vim
+        :'<,'>CheckSpellText
+        ```
+
 Neospeller will rewrite the buffer with the corrected text in the comments.
 
 Available languages:
@@ -75,4 +97,6 @@ Available languages:
 - CSS
 - Lua
 - C
+- Bash
+- Plain text
 
